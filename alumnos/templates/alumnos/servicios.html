@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto veterinaria</title>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="{% static 'style.css' %}" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'imagenes/logo.png' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <script>
+    const logoUrl = "{% static 'imagenes/logo.png' %}";
+  </script>
+</head>
+<body>
+  <!-- Seccion barra de navegacion -->
+  <header>
+  </header>
+
+  <!-- Inicio sección de servicios -->
+  <div class="container row mx-auto ">
+    <h1 class="titulo">Nuestros servicios</h1>
+    <!-- Primer conjunto de columnas -->
+    <h2 class="display-6 titulo">Consultas</h2>
+    <div class="col-md-12 col-lg-7 servicios">
+      <p class="h5">Reserva citas para tu mascota de manera rápida y conveniente a través de WhatsApp. Ya sea para consultas presenciales en nuestra clínica o sesiones virtuales, nuestro equipo estará encantado de atenderte y brindarte el mejor cuidado para tu compañero peludo, ¡todo con solo un mensaje!</p>
+      <br>
+      <a type="button" class="btn btn-success" href="https://wa.me/56939635536"><i class="bi bi-whatsapp"></i> Agenda tu visita</a>
+    </div>  
+    <!-- Imagen -->
+    <div class="col-md-12 col-lg-5 ">
+      <img class="img-fluid" src="{% static 'imagenes/servicio-consulta.gif' %}">
+    </div>
+
+    <!-- Segundo conjunto de columnas para pantalla completa -->
+    <h2 class="display-6 d-none d-lg-block titulo">Peluqueria</h2>
+    <!-- Imagen -->
+    <div class=" d-none d-lg-block col-lg-5 ">
+      <img class="img-fluid" src="{% static 'imagenes/servicio-peluqueria.gif' %}">
+    </div>
+    <div class="d-none d-lg-block col-lg-7 servicios">
+      
+      <p class="h5">¡Programa el próximo spa de tu mascota en nuestra peluquería con un simple mensaje por WhatsApp! Desde cortes de pelo a la moda hasta baños relajantes, reserva fácilmente el cuidado que tu amigo peludo merece con solo unos toques en tu teléfono.</p>
+      <br>
+      <a type="button" class="btn btn-success" href="https://wa.me/56939635536"><i class="bi bi-whatsapp"></i> Agenda tu visita</a>
+    </div>
+
+      <!-- Segundo conjunto de columnas para pantalla pequeña -->
+      <h2 class="display-6 d-lg-none titulo">Peluqueria</h2>
+    <div class="servicios d-lg-none col-md-12 col-lg-7 ">
+      
+      <p class="h5">¡Programa el próximo spa de tu mascota en nuestra peluquería con un simple mensaje por WhatsApp! Desde cortes de pelo a la moda hasta baños relajantes, reserva fácilmente el cuidado que tu amigo peludo merece con solo unos toques en tu teléfono.</p>
+      <br>
+      <a type="button" class="btn btn-success" href="https://wa.me/56939635536"><i class="bi bi-whatsapp"></i> Agenda tu visita</a>
+    </div>
+    <!-- Imagen -->
+    <div class="d-lg-none col-md-12 col-lg-5 ">
+      <img class="img-fluid" src="{% static 'imagenes/servicio-peluqueria.gif' %}">
+    </div>
+
+    <!-- Tercer conjunto de columnas -->
+    <h2 class="display-6 titulo ">Urgencias</h2>
+    <div class="servicios col-md-12 col-lg-7">
+      <p class="h5">¡En momentos de emergencia, estamos aquí para ayudar! Contacta con nuestro centro veterinario a través de WhatsApp para recibir atención inmediata para tu mascota. Ya sea un accidente repentino o una preocupación médica, nuestro equipo está listo para proporcionar el cuidado urgente que tu amigo peludo necesita, las 24 horas del día, los 7 días de la semana.</p>
+      <br>
+      <a type="button" class="btn btn-success" href="https://wa.me/56939635536"><i class="bi bi-whatsapp"></i> Consulta disponibilidad</a>
+    </div>
+    <!-- Imagen -->
+    <div class="col-md-12 col-lg-5 ">
+      <img class="img-fluid" src="{% static 'imagenes/servicio-urgencia.gif' %}">
+    </div>
+  </div>
+  <!-- Fin sección de servicios -->
+  <!--Popover -->
+  <button type="button" class="btn btn-secondary ubi-popover" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Para urgencias no es necesario agendar visita">
+    Importante
+  </button>
+  <!-- Fin popover  -->
+  <!-- Inicio pie de página -->
+  <footer>
+  <!--Se encuentra en main.js-->
+  </footer>
+  <!-- Fin pie de página -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <!-- script para habilitar los popover -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+      const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+    });
+  </script>
+  <script src="{% static 'main.js' %}"></script>
+  
+  </body>
+
+</html>

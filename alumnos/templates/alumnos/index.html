@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto veterinaria</title>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
+  <link href="{% static 'style.css' %}" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'imagenes/logo.png' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <script>
+    const logoUrl = "{% static 'imagenes/logo.png' %}";
+  </script>
+</head>
+<body>
+  <!-- Seccion barra de navegacion -->
+  <header>
+  </header>
+
+  <!-- Seccion de carrusel -->
+  <section class="container">
+    <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+      <div class="carousel-indicators" style="filter: grayscale(0%) invert(100%);">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3" aria-label="Slide 4"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="{% static 'imagenes/banner 1.png' %}" class="d-block w-100 img-fluid" alt="imagen descuento juguetes">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'imagenes/banner 2.png' %}" class="d-block w-100 img-fluid" alt="imagen descuento alimentos">
+        </div>
+        <div class="carousel-item">
+          <img src="{% static 'imagenes/banner 3.png' %}" class="d-block w-100 img-fluid" alt="imagen descuento perro">
+        </div>
+        <div class="carousel-item ">
+          <img src="{% static 'imagenes/banner 4.png' %}" class="d-block w-100 img-fluid" alt="imagen adopta mascotas">
+        </div>
+      </div>
+      <button class="carousel-control-prev " type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next " type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div> 
+  </section>
+  <!-- Fin carrusel -->
+
+  <!--Inicio del Card-->
+  <section class="row container-fluid">
+  <div class="container col-lg-2 col-md-6" style="width: 18rem;">
+    <img src="{% static 'imagenes/servicios.gif' %}" class="card-img-top" alt="imagen agenda servicios">
+    <div class="card-body">
+      <h5 class="card-title">Servicios</h5>
+      <p class="card-text">Agenda citas para tu mascota en nuestra peluquería o clínica veterinaria a través de WhatsApp.</p>
+      <a href="servicios" class="btn btn-primary">Ir a servicios</a>
+    </div>
+  </div>
+
+  <div class="container col-lg-2 col-md-6" style="width: 18rem ;">
+    <img src="{% static 'imagenes/productos.gif' %}" class="card-img-top" alt="imagen seccion productos">
+    <div class="card-body">
+      <h5 class="card-title">Productos</h5>
+      <p class="card-text">Descubre una amplia gama de productos para mascotas en nuestra tienda en línea.</p>
+      <a href="productos" class="btn btn-primary">Ir a productos</a>
+    </div>
+  </div>
+
+  <div class="container col-lg-2 col-md-6" style="width: 18rem ;">
+    <img src="{% static 'imagenes/articulos.gif' %}" class="card-img-top" alt="Imagen seccion articulos">
+    <div class="card-body">
+      <h5 class="card-title">Articulos de interés</h5>
+      <p class="card-text">Descubre una variedad de consejos esenciales para el cuidado de mascotas en nuestra sección de artículos.</p>
+      <a href="articulos" class="btn btn-primary">Ir a articulos</a>
+    </div>
+  </div>
+
+</section>
+
+  <!--Fin del card-->
+
+  <!--Popover -->
+    <button type="button" class="btn btn-secondary ubi-popover" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Para urgencias no es necesario agendar visita">
+          Importante
+    </button>
+  <!-- Fin popover  -->
+
+  <!-- Pie de pagina -->
+  <footer>
+      <!--Se encuentra en main.js-->
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <!-- script para habilitar los popover -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+      const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+  <script src="{% static 'main.js' %}"></script>
+  
+
+
+</body>
+
+</html>
+

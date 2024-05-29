@@ -1,0 +1,94 @@
+/* Estilo fondo */
+body{
+  background-image: url(imagenes/fondo4.png);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.logo-veterinaria{
+  width: 50px;
+  height: auto;
+}
+/* estilos navbar */
+.navbar{
+  background-color: #0fa774;
+  color: black;
+}
+.navbar-collapse{
+  justify-content: space-between;
+}
+/* Estilos contenedores */
+.container{
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: #48F8A9;
+  align-content: center;
+  text-align: center;
+  padding: 20px;
+}
+.container-fluid{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Botones carrusel */
+.carousel-control-next-icon{background-image: url("{% static 'icon/next.png' %}");}
+.carousel-control-prev-icon{background-image: url("{% static 'icon/back.png' %}");}
+
+/* Pie de pagina */
+footer{
+  padding:1%;
+  background-color: #d6f7e5;
+}
+.bi{
+  font-size: 20px;
+  padding: 5px;
+  color: black;
+}
+
+/* Servicios */
+.servicios{
+  padding: 13vh;
+  background-color: #54e9a6;
+  margin: auto;
+  border-radius: 20px;
+}
+.titulo{
+  padding-top: 3%;
+  padding-bottom: 3%;
+}
+/* Popopover */
+.ubi-popover {
+  position: fixed;
+  left: auto; 
+  bottom: 2%; 
+  background-color: #424443;
+}
+/* Articulos */
+.articulo{
+  padding-top: 3%;
+  min-height: 5vh; 
+}
+.articuloOculto1,.articuloOculto2,.articuloOculto3{
+  display: none;
+}
+.img-articulo{
+  text-align: center;
+  height: 58vh;
+}
+.card-articulo{
+  white-space: pre;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+span{
+  color: #aa0101;
+  font-size: 80%;
+}
+form {
+  margin-bottom: 60px; 
+}
+#direccion{
+  width: 210%;
+}
