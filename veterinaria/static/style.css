@@ -32,10 +32,6 @@ body{
   align-items: center;
 }
 
-/* Botones carrusel */
-.carousel-control-next-icon{background-image: url("{% static 'icon/next.png' %}");}
-.carousel-control-prev-icon{background-image: url("{% static 'icon/back.png' %}");}
-
 /* Pie de pagina */
 footer{
   padding:1%;
