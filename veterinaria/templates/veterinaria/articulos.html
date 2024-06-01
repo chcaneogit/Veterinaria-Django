@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proyecto veterinaria</title>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
+  <link href="{% static 'style.css' %}" rel="stylesheet">
+  <link rel="shortcut icon" type="image/x-icon" href="{% static 'imagenes/logo.png' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+  <style>
+    .carousel-control-next-icon {
+      background-image: url("{% static 'icon/next.png' %}");
+    }
+    .carousel-control-prev-icon {
+      background-image: url("{% static 'icon/back.png' %}");
+    }
+  </style>
+  <script>
+    const logoUrl = "{% static 'imagenes/logo.png' %}";
+  </script>
+</head>
+<body>
+  <!-- Seccion barra de navegacion -->
+  <header>
+  </header>
+
+<!--Articulos de interes-->
+<section class="container">
+  <div class="row">
+    <div class="col-md-12 articulo" >
+      <h2>Cuidados para tu gato adulto</h2>
+      <p class="articulo">
+        Para aquellos que tienen la fortuna de compartir su hogar con un gato adulto, el cuidado va más allá de las tareas diarias; es una expresión de amor y compromiso hacia estos maravillosos compañeros felinos.
+
+        En primer lugar, la alimentación adecuada es fundamental para mantener a nuestro amigo felino sano y feliz. Como amantes de los gatos, comprendemos la importancia de proporcionarles una dieta equilibrada y de alta calidad, adaptada a sus necesidades específicas como adultos.
+      </p>
+      <div class="articuloOculto1">
+      <p>Nos aseguramos de ofrecerles una variedad de alimentos sabrosos y nutritivos para mantener su vitalidad y salud a lo largo del tiempo.</p>
+
+      <P>Además, como amantes de los gatos, disfrutamos dedicando tiempo a mantener la higiene de nuestro compañero peludo. No solo cepillamos su suave pelaje con delicadeza para eliminar los pelos sueltos y evitar las temidas bolas de pelo, sino que también nos encargamos de sus uñas, orejas y dientes con cuidado y dedicación.</p>
+
+      <P>Entendemos que nuestros gatos necesitan más que comida y cuidados básicos; necesitan un entorno enriquecedor que estimule su curiosidad y les permita expresar su naturaleza juguetona y exploradora. Por eso, creamos un espacio en nuestro hogar lleno de juguetes interesantes, áreas de descanso acogedoras y lugares para trepar y observar su territorio con orgullo.</P>
+    
+      <P>Como verdaderos amantes de los gatos, comprendemos la importancia de la atención médica preventiva. Programamos regularmente visitas al veterinario para chequeos de salud y vacunaciones, asegurándonos de que nuestros queridos compañeros estén protegidos y cuidados en todo momento.</P>
+      
+      <P>En resumen, cuidar de un gato adulto va más allá de las responsabilidades diarias; es un acto de amor y devoción hacia estos seres especiales que iluminan nuestras vidas con su presencia única y fascinante.</P>
+      
+      </div>
+      <button id="verMas1" class="btn btn-success">Ver más</button>
+    </div>
+    <div class="col-md-12">
+      <img src="{% static 'imagenes/gato1.jpg' %}" class="img-fluid img-articulo" alt="Imagen del artículo cuidados">
+    </div>
+  </div>
+  
+</section>
+<section class="container">
+    <div class="row">
+      <div class="col-md-12 articulo">
+        <h2>Controles al día</h2>
+        <p class="articulo">Como veterinario, es crucial educar a los dueños de gatos sobre la importancia de los controles regulares para garantizar la salud y el bienestar de sus mascotas felinas. Los gatos son criaturas curiosas y a menudo ocultan signos de enfermedad, lo que hace que los chequeos regulares sean aún más importantes. Aquí hay una visión general de los controles que recomiendo para mantener a los gatos al día y saludables:
+        </p>
+        <div class="articuloOculto2"></p>
+        <p> 1. Exámenes físicos regulares: Los exámenes físicos son fundamentales para detectar cualquier problema de salud temprano. Durante estos exámenes, evalúo el peso corporal, la condición de la piel y el pelaje, el estado de los ojos y oídos, así como la salud dental y la condición general del gato. También aprovecho para discutir la dieta, el ejercicio y el comportamiento del gato con el propietario.
+        </p> 
+        <p> 2. Vacunaciones: Las vacunas son una parte esencial del cuidado preventivo de los gatos. Recomiendo un plan de vacunación personalizado basado en el estilo de vida del gato y los riesgos específicos a los que está expuesto. Las vacunas comunes para gatos incluyen las vacunas contra la rabia, la panleucopenia felina, el calicivirus felino y el herpesvirus felino.
+        </p>  
+        <p> 3. Desparasitación: Los gatos pueden contraer parásitos internos y externos, como gusanos intestinales, pulgas y garrapatas. Recomiendo un régimen de desparasitación regular para prevenir la infestación y proteger la salud del gato. Esto puede incluir medicamentos orales, tópicos o inyecciones, según las necesidades individuales del gato.
+        </p>  
+        <p> 4. Pruebas de laboratorio: Las pruebas de laboratorio, como análisis de sangre, análisis de orina y pruebas de detección de enfermedades infecciosas, son herramientas importantes para evaluar la salud interna del gato. Estas pruebas pueden ayudar a identificar problemas de salud subyacentes, como enfermedades renales, diabetes, infecciones urinarias y enfermedades virales.
+        </p>  
+        <p> 5. Cuidado dental: El cuidado dental es una parte vital del cuidado preventivo de los gatos. Recomiendo realizar limpiezas dentales regulares para prevenir la acumulación de placa y sarro, que pueden provocar enfermedades de las encías y pérdida dental. Además, enseño a los propietarios la importancia de cepillar los dientes de sus gatos en casa y proporcionar juguetes dentales adecuados.
+        </p>  
+        <p> En resumen, los controles regulares son fundamentales para mantener a los gatos al día y saludables. Como veterinario, estoy comprometido a proporcionar la mejor atención posible para mis pacientes felinos, y alentar a los propietarios a ser proactivos en el cuidado de la salud de sus adoradas mascotas. Al realizar controles regulares y seguir un plan de cuidado preventivo, podemos garantizar una vida larga y feliz para nuestros amigos felinos.
+        </p>
+        </div>
+        <button id="verMas2" class="btn btn-success">Ver más</button>
+      </div>
+      <div class="col-md-12">
+        <img src="{% static 'imagenes/gato2.jpg' %}" class="img-fluid img-articulo" alt="Imagen del artículo control">
+        
+      </div>
+    </div>
+</section>
+<section class="container">
+  <div class="row">
+    <div class="col-md-12 articulo">
+      <h2>Datos que debes saber sobre tu perro</h2>
+      <p class="articulo">
+        Como veterinario comprometido con el bienestar de los perros y sus dueños, es un honor ofrecertalgunos consejos para una crianza responsable de estos adorables compañeros caninos.
+      </p> 
+      <p>Proporciona atención veterinaria regular: La salud de tu perro es una prioridad. Programa visitaregulares al veterinario para chequeos de salud, vacunaciones y tratamientos preventivos contrparásitos. Estos controles son fundamentales para detectar problemas de salud temprano y garantizar qutu perro tenga una vida larga y saludable.
+      </p>
+      <div class="articuloOculto3">  
+        <p> Alimentación adecuada y equilibrada: La dieta de tu perro juega un papel crucial en su salud bienestar. Elije alimentos de alta calidad y adecuados para su edad, tamaño y nivel de actividad. Evitlos alimentos procesados y asegúrate de proporcionarle agua fresca y limpia en todo momento.
+        </p>   
+        <p> Ejercicio regular y estimulación mental: Los perros necesitan ejercicio diario para mantenersfísica y mentalmente saludables. Proporciona paseos regulares, tiempo de juego y actividades denriquecimiento para mantener a tu perro activo y feliz. Esto no solo fortalece su cuerpo, sino qutambién previene el aburrimiento y el comportamiento no deseado.
+        </p>  
+        <p> Entrenamiento y socialización: La educación temprana es esencial para criar un perro bien educado equilibrado. Dedica tiempo al entrenamiento de obediencia y socialización desde una edad temprana. Estayudará a tu perro a desarrollar habilidades sociales adecuadas y a establecer una relación sólidcontigo y con otros perros.
+        </p>   
+        <p> Ambiente seguro y cómodo: Crea un ambiente seguro y cómodo para tu perro en tu hogar. Proporcionun espacio tranquilo para descansar y dormir, así como juguetes y actividades adecuadas para mantenerlentretenido. Mantén tu hogar libre de peligros y asegúrate de que tu perro tenga acceso a refugio protección contra condiciones climáticas adversas.
+        </p>   
+        <p> Amor y cuidado constante: Finalmente, brinda a tu perro el amor y el cuidado que se merece. Dedictiempo de calidad con él, demuéstrale afecto y establece una rutina de cuidado diario. Tu amor atención son fundamentales para su felicidad y bienestar general.
+        </p>   
+        <p> Siguiendo estos consejos de crianza responsable, estarás creando un ambiente óptimo para edesarrollo y la felicidad de tu perro, fortaleciendo así el vínculo especial que compartes con tu fiecompañero canino.
+        </p>
+      </div>
+      <button id="verMas3" class="btn btn-success">Ver más</button>
+    </div>
+    <div class="col-md-12">
+      <img src="{% static 'imagenes/datosperro.jpeg' %}" class="img-fluid img-articulo" alt="Imagen del artículo perros">
+    </div>
+  </div>
+</section> 
+<!--Fin Articulos de interes-->
+
+<!--Popover -->
+<button type="button" class="btn btn-secondary ubi-popover" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Para urgencias no es necesario agendar visita">
+  Importante
+</button>
+<!-- Fin popover  -->
+<footer>
+  <!--Se encuentra en main.js-->
+</footer>
+  
+    <script src="{% static 'main.js' %}"></script>
+
+
+</body>
+
+</html>
