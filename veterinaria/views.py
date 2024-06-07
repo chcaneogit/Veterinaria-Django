@@ -25,3 +25,7 @@ def carro(request):
 def registro(request):
     context={}
     return render(request, 'veterinaria/registro.html', context)
+
+def base(request):
+    context={}
+    return render(request, 'veterinaria/base.html', context)

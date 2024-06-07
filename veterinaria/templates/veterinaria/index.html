@@ -1,18 +1,10 @@
+{% extends 'veterinaria/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Proyecto veterinaria</title>
-  {% load bootstrap5 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> 
-  <link href="{% static 'style.css' %}" rel="stylesheet">
-  <link rel="shortcut icon" type="image/x-icon" href="{% static 'imagenes/logo.png' %}">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
   <style>
     .carousel-control-next-icon {
       background-image: url("{% static 'icon/next.png' %}");
@@ -21,16 +13,6 @@
       background-image: url("{% static 'icon/back.png' %}");
     }
   </style>
-  <script>
-    const logoUrl = "{% static 'imagenes/logo.png' %}";
-  </script>
-</head>
-<body>
-  <!-- Seccion barra de navegacion -->
-  <header>
-  </header>
-
-  <!-- Seccion de carrusel -->
   <section class="container">
     <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
       <div class="carousel-indicators" style="filter: grayscale(0%) invert(100%);">
@@ -67,53 +49,35 @@
 
   <!--Inicio del Card-->
   <section class="row container-fluid">
-  <div class="container col-lg-2 col-md-6" style="width: 18rem;">
-    <img src="{% static 'imagenes/servicios.gif' %}" class="card-img-top" alt="imagen agenda servicios">
-    <div class="card-body">
-      <h5 class="card-title">Servicios</h5>
-      <p class="card-text">Agenda citas para tu mascota en nuestra peluquería o clínica veterinaria a través de WhatsApp.</p>
-      <a href="servicios" class="btn btn-primary">Ir a servicios</a>
+    <div class="container col-lg-2 col-md-6" style="width: 18rem;">
+      <img src="{% static 'imagenes/servicios.gif' %}" class="card-img-top" alt="imagen agenda servicios">
+      <div class="card-body">
+        <h5 class="card-title">Servicios</h5>
+        <p class="card-text">Agenda citas para tu mascota en nuestra peluquería o clínica veterinaria a través de WhatsApp.</p>
+        <a href="servicios" class="btn btn-primary">Ir a servicios</a>
+      </div>
     </div>
-  </div>
 
-  <div class="container col-lg-2 col-md-6" style="width: 18rem ;">
-    <img src="{% static 'imagenes/productos.gif' %}" class="card-img-top" alt="imagen seccion productos">
-    <div class="card-body">
-      <h5 class="card-title">Productos</h5>
-      <p class="card-text">Descubre una amplia gama de productos para mascotas en nuestra tienda en línea.</p>
-      <a href="productos" class="btn btn-primary">Ir a productos</a>
+    <div class="container col-lg-2 col-md-6" style="width: 18rem ;">
+      <img src="{% static 'imagenes/productos.gif' %}" class="card-img-top" alt="imagen seccion productos">
+      <div class="card-body">
+        <h5 class="card-title">Productos</h5>
+        <p class="card-text">Descubre una amplia gama de productos para mascotas en nuestra tienda en línea.</p>
+        <a href="productos" class="btn btn-primary">Ir a productos</a>
+      </div>
     </div>
-  </div>
 
-  <div class="container col-lg-2 col-md-6" style="width: 18rem ;">
-    <img src="{% static 'imagenes/articulos.gif' %}" class="card-img-top" alt="Imagen seccion articulos">
-    <div class="card-body">
-      <h5 class="card-title">Articulos de interés</h5>
-      <p class="card-text">Descubre una variedad de consejos esenciales para el cuidado de mascotas en nuestra sección de artículos.</p>
-      <a href="articulos" class="btn btn-primary">Ir a articulos</a>
+    <div class="container col-lg-2 col-md-6" style="width: 18rem ;">
+      <img src="{% static 'imagenes/articulos.gif' %}" class="card-img-top" alt="Imagen seccion articulos">
+      <div class="card-body">
+        <h5 class="card-title">Articulos de interés</h5>
+        <p class="card-text">Descubre una variedad de consejos esenciales para el cuidado de mascotas en nuestra sección de artículos.</p>
+        <a href="articulos" class="btn btn-primary">Ir a articulos</a>
+      </div>
     </div>
-  </div>
-
-</section>
+    
+  </section>
+  <br><br>
 
   <!--Fin del card-->
-
-  <!--Popover -->
-    <button type="button" class="btn btn-secondary ubi-popover" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Para urgencias no es necesario agendar visita">
-          Importante
-    </button>
-  <!-- Fin popover  -->
-
-  <!-- Pie de pagina -->
-  <footer>
-      <!--Se encuentra en main.js-->
-  </footer>
-  
-  <script src="{% static 'main.js' %}"></script>
-  
-
-
-</body>
-
-</html>
-
+{% endblock %}
