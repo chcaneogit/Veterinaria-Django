@@ -6,7 +6,7 @@
 {% block content %}
   <!-- Inicio sección de registro -->
   <section class="container">
-    <form action="#" class="was-validated">
+    <form action="#" class="was-validated" method="post">
     <div class="container row mx-auto registro">
       <div class="col-md-3 col-lg-3">
         <div class="text-center">
@@ -71,7 +71,7 @@
           </div>
           <div class="mb-3">
             <label for="pwd" class="form-label">Contraseña:</label>
-            <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" name="pswd" required autocomplete="off" oninput="validarTexto('password')">
+            <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" name="password" required autocomplete="off" oninput="validarTexto('password')">
             <span id="password-error"></span>
           </div>    
         </div>
