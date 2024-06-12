@@ -1,0 +1,68 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Editar Usuario{% endblock %}
+
+{% block content %}
+<section class="container">
+  <form action="{% url 'usuarioUpdate' %}" class="was-validated" method="post">
+    {% csrf_token %}
+    <div class="container row mx-auto registro">
+      <div class="col-md-3 col-lg-3">
+        <div class="text-center">
+          <h3>Editar Usuario</h3>
+          <img src="{% static 'imagenes/logo.png' %}" style="width: 185px;" alt="logo">
+          <h4 class="mt-1 mb-5 pb-1">Proyecto Veterinaria</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-lg-3">
+        <div class="mb-3 mt-3">
+          <label for="nombre" class="form-label">Nombres:</label>
+          <input type="text" class="form-control" id="nombre" placeholder="Ingresa tus nombres" name="nombre" value="{{ usuario.nombre }}" required autocomplete="off" oninput="validarTexto('nombre')">
+          <span id="nombre-error"></span>
+        </div>
+        <div class="mb-3 ">
+          <label for="apellido" class="form-label">Apellidos:</label>
+          <input type="text" class="form-control" id="apellido" placeholder="Ingresa tus apellidos" name="apellido" value="{{ usuario.apellido }}" required autocomplete="off" oninput="validarTexto('apellido')">
+          <span id="apellido-error"></span>
+        </div>
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo:</label>
+          <input type="mail" class="form-control" id="correo" placeholder="Ingrese su correo" name="correo" value="{{ usuario.correo }}" required autocomplete="off" oninput="validarTexto('correo')">
+          <span id="correo-error"></span>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="rut" class="form-label">RUT:</label>
+            <input type="text" class="form-control" id="rut" placeholder="123456789" name="rut" value="{{ usuario.rut }}" readonly>
+        </div>  
+      </div>
+      <div class="col-md-3 col-lg-3">
+        <div class="mb-3 mt-3">
+          <label for="celular" class="form-label">Número celular:</label>
+          <div class="input-group">
+            <span class="input-group-text">+56</span>
+            <input type="text" class="form-control" id="celular" placeholder="Ingresa tu celular" name="celular" value="{{ usuario.celular }}" required autocomplete="off" oninput="validarCelular('celular')">
+          </div>
+          <span id="celular-error"></span>
+        </div>
+        <div class="mb-3">
+          <label for="direccion" class="form-label">Direccion:</label>
+          <input type="text" class="form-control" id="direccion" placeholder="Ingresa tu direccion" name="direccion" value="{{ usuario.direccion }}" required autocomplete="off" oninput="validarTexto('direccion')">
+          <span id="direccion-error"></span>
+        </div>
+        <button type="submit" class="btn btn-primary" onclick="validarEditar()">Actualizar</button>
+      </div>
+      <div class="col-md-3 col-lg-3">
+        
+        <div class="mb-3 mt-3">
+          <label for="pwd" class="form-label">Contraseña:</label>
+          <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" name="password" required autocomplete="off" oninput="validarTexto('password')">
+          <span id="password-error"></span>
+        </div>    
+      </div>
+      
+    
+    </div>
+  </form>
+</section>
+{% endblock %}

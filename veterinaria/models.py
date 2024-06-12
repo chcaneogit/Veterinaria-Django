@@ -2,7 +2,8 @@
 from django.db import models
 
 class Usuario(models.Model):
-    rut = models.CharField(max_length=10, primary_key=True)  
+    rut = models.CharField(max_length=8, primary_key=True)  
+    dv = models.CharField(max_length=1)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     correo = models.EmailField(max_length=100)
@@ -12,4 +13,4 @@ class Usuario(models.Model):
     password = models.CharField(max_length=100)  
 
     def __str__(self):
-        return f"{self.nombre} {self.apellido}"
+        return f"{self.rut} {self.dv} {self.nombre} {self.apellido} {self.correo} {self.nacimiento} {self.celular} {self.direccion} {self.password}"

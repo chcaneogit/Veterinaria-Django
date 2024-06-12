@@ -89,7 +89,7 @@ function validarCelular(idCampo) {
     let numero = parseInt(celular);
     let celularError = document.getElementById(idCampo + "-error");
     let formulario = celularInput.closest('form');
-    if (numero < 9999999 || numero > 100000000) {
+    if (numero < 99999999 || numero > 1000000000) {
         celularError.innerText = "Por favor, ingresa tu "+ idCampo;
         formulario.classList.remove('was-validated');
         return false;
@@ -181,6 +181,26 @@ function validarFormulario() {
 
     // Si alguna validación falla, muestra un mensaje de error y devuelve false
     if (!(nombreValido && correoValido && edadValida && apellidoValido && celularValido && contraseñaValida && rutValido && direccionValida)) {
+        alert('Por favor, completa todos los campos correctamente.');
+        return false;
+    }
+
+    // Si todas las validaciones son exitosas, muestra una alerta indicando que la cuenta ha sido creada y devuelve true
+    alert('¡Cuenta creada exitosamente!');
+    return true;
+}
+
+function validarEditar() {
+    // Llama funciones de validación individualmente
+    const nombreValido = validarTexto('nombre');
+    const correoValido = validarTexto('correo');
+    const apellidoValido = validarTexto('apellido');
+    const celularValido = validarCelular('celular');
+    const contraseñaValida = validarTexto('password');
+    const direccionValida = validarTexto('direccion');
+
+    // Si alguna validación falla, muestra un mensaje de error y devuelve false
+    if (!(nombreValido && correoValido && apellidoValido && celularValido && contraseñaValida && direccionValida)) {
         alert('Por favor, completa todos los campos correctamente.');
         return false;
     }

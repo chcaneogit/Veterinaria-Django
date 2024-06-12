@@ -1,0 +1,46 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block title %}Lista de Usuarios{% endblock %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <h2>Lista de Usuarios</h2>
+    <br>
+    <table class="table">
+        {% if usuarios %}
+        <thead>
+            <tr>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Correo</th>
+                <th>Fecha de nacimiento</th>
+                <th>Número celular</th>
+                <th>Direccion</th>
+                <th>RUT</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for usuario in usuarios %}
+            <tr>
+                <td>{{ usuario.nombre }}</td>
+                <td>{{ usuario.apellido }}</td>
+                <td>{{ usuario.correo }}</td>
+                <td>{{ usuario.nacimiento }}</td>
+                <td>{{ usuario.celular }}</td>
+                <td>{{ usuario.direccion }}</td>
+                <td>{{ usuario.rut }}-{{ usuario.dv }}</td>
+                <td>
+                    <a href="{% url 'eliminar_usuario' pk=usuario.rut %}" class="btn btn-danger">Eliminar</a>
+                    <a href="{% url 'usuarios_findEdit' pk=usuario.rut %}" class="btn btn-primary">Editar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        {% else %}
+        <p>No hay usuarios disponibles.</p>
+        {% endif %}
+    </table>
+</div>
+{% endblock %}
