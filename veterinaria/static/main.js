@@ -206,7 +206,7 @@ function validarEditar() {
     }
 
     // Si todas las validaciones son exitosas, muestra una alerta indicando que la cuenta ha sido creada y devuelve true
-    alert('¡Cuenta creada exitosamente!');
+    alert('¡Cuenta actualizada exitosamente!');
     return true;
 }
 
