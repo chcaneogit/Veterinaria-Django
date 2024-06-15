@@ -1,6 +1,7 @@
 
 from django.urls import path
 from . import views
+from .views import login_view
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -16,6 +17,6 @@ urlpatterns = [
     path('eliminar_usuario/<str:pk>/', views.eliminar_usuario, name='eliminar_usuario'),
     path('usuarios_findEdit/<str:pk>/', views.usuarios_findEdit, name='usuarios_findEdit'),
     path('usuarioUpdate', views.usuarioUpdate, name='usuarioUpdate'),
-
+    path('login', login_view, name='login'),
     
 ]

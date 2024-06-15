@@ -54,40 +54,30 @@
     <!-- MODAL INICIO DE SESION-->
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
       <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="loginModalLabel">Inicio de Sesión</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="col-md-8">
-                <label for="validationCustomUsername" class="form-label">Nombre Usuario</label>
-                <div class="input-group has-validation"> 
-                  <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                  <div class="invalid-feedback">
-                    Introduzca nombre de usuario.
-                  </div>
-                </div>
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="loginModalLabel">Inicio de Sesión</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="col-md-8">
-                <label for="validationCustomUsername" class="form-label">Contraseña</label>
-                <div class="input-group has-validation">
-                  <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-                  <div class="invalid-feedback">
-                    Instroduzca la contraseña.
+              <div class="modal-body">
+                <form method="post" action="{% url 'login' %}">
+                  {% csrf_token %}
+                  <div class="mb-3">
+                      <label for="rut" class="form-label">Correo</label>
+                      <input type="text" name="rut" class="form-control" id="id_rut" required>
                   </div>
-                </div>
+                  <div class="mb-3">
+                      <label for="password" class="form-label">Contraseña</label>
+                      <input type="password" name="password" class="form-control" id="id_password" required>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+                  <a href="{% url 'registro' %}" class="btn btn-primary">Registrarse</a>
+                </form>
               </div>
-              <br>
-              <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-              <a href="{% url 'registro' %}" button type="submit" class="btn btn-primary">Registrarse</button></a>
-            </form>
           </div>
-        </div>
       </div>
     </div>
-    <!--FIN MODAL INICIO DE SESION-->
+  <!-- FIN MODAL INICIO DE SESION -->
     {% block content %}
     {% endblock %}
     <!--Popover -->
