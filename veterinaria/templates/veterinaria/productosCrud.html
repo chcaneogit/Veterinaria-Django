@@ -1,0 +1,41 @@
+{% extends 'veterinaria/base.html' %}
+
+{% block title %}Lista de Productos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <br>
+    <h2>Lista de productos</h2>
+    <br>
+    <table class="table">
+        {% if productos %}
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Valor</th>
+                <th>Cantidad</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto.codigo }}</td>
+                <td>{{ producto.nombre }}</td>
+                <td>{{ producto.valor }}</td>
+                <td>{{ producto.cantidad }}</td>
+                <td>
+                    <a href="{% url 'eliminarProducto' pk=producto.codigo %}" class="btn btn-danger">Eliminar</a>
+                    <a href="{% url 'productos_findEdit' pk=producto.codigo %}" class="btn btn-primary">Editar</a>
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        {% else %}
+        <p>No hay productos disponibles.</p>
+        {% endif %}
+    </table>
+</div>
+{% endblock %}

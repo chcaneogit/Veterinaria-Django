@@ -1,0 +1,37 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Perfil{% endblock %}
+
+{% block content %}
+<section class="container">
+    <div class="container row mx-auto registro">
+      <div class="col-md-6">
+        <div class="text-center">
+          <h3>Editar Usuario</h3>
+          <img src="{% static 'imagenes/logo.png' %}" style="width: 185px;" alt="logo">
+          <h4 class="mt-1 mb-5 pb-1">Proyecto Veterinaria</h4>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombres:</label>
+          <input type="text" class="form-control" id="nombre" placeholder="Ingresa tus nombres" name="nombre" value="{{ usuario.first_name }}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="apellido" class="form-label">Apellidos:</label>
+          <input type="text" class="form-control" id="apellido" placeholder="Ingresa tus apellidos" name="apellido" value="{{ usuario.last_name }}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo:</label>
+          <input type="email" class="form-control" id="correo" placeholder="Ingrese su correo" name="correo" value="{{ usuario.email }}" readonly>
+        </div>
+        <div class="mb-3">
+          <label for="rut" class="form-label">RUT (sin dv):</label>
+          <input type="text" class="form-control" id="rut" placeholder="123456789" name="rut" value="{{ usuario.username }}" readonly>
+        </div>
+        <a href="{% url 'usuarios_findEdit' pk=usuario.username %}" class="btn btn-primary">Editar datos</a>
+      </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,11 +1,13 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.db import IntegrityError
-from .models import Usuario 
+from .models import Usuario, Producto
+from django.contrib.auth.hashers import make_password
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
-# Create your views here.
-
+#Create your views here.
 def index(request):
     context={}
     return render(request, 'veterinaria/index.html', context)
@@ -38,6 +40,24 @@ def crud(request):
     context={}
     return render(request, 'veterinaria/crud.html', context)
 
+def productosAdd(request):
+    context={}
+    return render(request, 'veterinaria/productosAdd.html', context)
+
+def productosEdit(request):
+    context={}
+    return render(request, 'veterinaria/productosEdit.html', context)
+
+@login_required
+def perfil(request):
+    usuario = request.user  # Recupera el usuario actualmente autenticado
+    context = {'usuario': usuario}
+    return render(request, 'veterinaria/perfil.html', context)
+#CRUD USUARIOS
+def crud(request):
+    usuarios = Usuario.objects.all()
+    context = {"usuarios": usuarios}
+    return render(request, 'veterinaria/crud.html', context)
 
 def registroUsuario(request):
     if request.method == "POST":
@@ -51,55 +71,49 @@ def registroUsuario(request):
         direccion = request.POST["direccion"]
         password = request.POST["password"]
 
-        if password == password:
-            try:
-                # Crear un usuario de Django
-                user = User.objects.create_user(
-                    username=correo,
-                    password=password,
-                    email=correo,
-                    first_name=nombre,
-                    last_name=apellido
-                )
 
-                # Crear el objeto Usuario en tu modelo personalizado
-                obj = Usuario.objects.create(
-                    rut=rut,
-                    dv=dv,
-                    nombre=nombre,
-                    apellido=apellido,
-                    correo=correo,
-                    nacimiento=nacimiento,
-                    celular=celular,
-                    direccion=direccion,
-                    password=password  # Asegúrate de manejar correctamente la contraseña
-                )
+        try:
+            # Verificar si el usuario ya existe
+            if User.objects.filter(username=rut).exists():
+                messages.error(request, "El RUT ya está en uso.")
+                return render(request, 'veterinaria/registro.html')
 
-                # Guardar el objeto Usuario
-                obj.save()
+            # Crear un usuario de Django
+            user = User.objects.create_user(
+                username=rut,
+                password=password,
+                email=correo,
+                first_name=nombre,
+                last_name=apellido
+            )
 
-                
+            # Crear el objeto Usuario en tu modelo personalizado
+            obj = Usuario.objects.create(
+                rut=rut,
+                dv=dv,
+                nombre=nombre,
+                apellido=apellido,
+                correo=correo,
+                nacimiento=nacimiento,
+                celular=celular,
+                direccion=direccion,
+                password=make_password(password)  # Cifrar la contraseña
+            )
 
-                # Redirigir a la página deseada después del registro
-                return redirect('index')  
+            # Añadir mensaje de éxito
+            messages.success(request, "Cuenta creada exitosamente.")
+            # Redirigir a la página deseada después del registro
+            return render(request, 'veterinaria/registro.html') 
 
-            except IntegrityError:
-                # Manejar el caso donde el nombre de usuario (rut) ya existe
-                return render(request, 'registro.html', {"error": "El rut ya está en uso."})
-
-        else:
-            # Manejar el caso donde las contraseñas no coinciden
-            return render(request, 'registro.html', {"error": "Las contraseñas no coinciden."})
+        except IntegrityError:
+            # Manejar el caso donde el nombre de usuario (rut) ya existe
+            messages.error(request, "El RUT ya está en uso.")
+            return render(request, 'veterinaria/registro.html')
 
     else:
         # Renderizar el formulario de registro en el método GET
-        return render(request, 'registro.html')
+        return render(request, 'veterinaria/registro.html')
     
-def crud(request):
-    usuarios = Usuario.objects.all()
-    context = {"usuarios": usuarios}
-    return render(request, 'veterinaria/crud.html', context)
-
 def eliminar_usuario(request, pk):
     context={}
     try:
@@ -114,9 +128,8 @@ def eliminar_usuario(request, pk):
         usuarios = Usuario.objects.all()
         context = {'usuarios': usuarios, 'mensaje': mensaje}
         return render(request, 'veterinaria/crud.html', context)
-    
+
 def usuarios_findEdit(request, pk):
-    
     if pk != "":
         usuario = Usuario.objects.get(rut=pk)
         
@@ -126,7 +139,7 @@ def usuarios_findEdit(request, pk):
         else:
             context={'mensaje': "Error, rut no existe..."}
             return render(request, 'veterinaria/crud.html', context)     
-
+        
 def usuarioUpdate(request):
     if request.method == "POST":
         # Recupera los datos del formulario
@@ -141,16 +154,31 @@ def usuarioUpdate(request):
         # Recupera el usuario existente por su rut
         usuario = Usuario.objects.get(rut=rut)
         
-        # Actualiza solo los campos que se han modificado en el formulario
+        # Actualiza los campos
         usuario.nombre = nombre
         usuario.apellido = apellido
         usuario.correo = correo
         usuario.celular = celular
         usuario.direccion = direccion
-        usuario.password = password
+        
+        # Si se proporciona una nueva contraseña, actualizarla
+        if password:
+            usuario.password = make_password(password)
         
         # Guarda los cambios
         usuario.save()
+        
+        # También actualiza el objeto User de Django si existe
+        try:
+            user = User.objects.get(username=rut)
+            user.email = correo
+            user.first_name = nombre
+            user.last_name = apellido
+            if password:
+                user.set_password(password)  # Utiliza set_password para cifrar la contraseña
+            user.save()
+        except User.DoesNotExist:
+            pass
         
         context = {'mensaje': "Ok, datos actualizados...", 'usuario': usuario}
         return render(request, 'veterinaria/index.html', context)
@@ -159,20 +187,21 @@ def usuarioUpdate(request):
         usuarios = Usuario.objects.all()
         context = {'usuarios': usuarios}
         return render(request, 'veterinaria/crud.html', context)
-
+    
 def login_view(request):
+    
     if request.method == 'POST':
         rut = request.POST.get('rut')
         password = request.POST.get('password')
         print(f'rut: {rut}, Password: {password}')
-
+        
         # Verificar que el usuario existe
         try:
             user = User.objects.get(username=rut)
             print(f'User found: {user.username}, Active: {user.is_active}')
         except User.DoesNotExist:
             print('User does not exist')
-            return render(request, 'veterinaria/articulos.html', {"error": "Credenciales incorrectas"})
+            return render(request, 'veterinaria/index.html', {"error": "RUT y/o contraseñas incorrecto"})
 
         # Autenticar al usuario usando el campo rut
         user = authenticate(request, username=rut, password=password)
@@ -181,9 +210,107 @@ def login_view(request):
         if user is not None:
             login(request, user)
             print("Inicio de sesión exitoso")
-            return redirect('index')
+            return render(request, 'veterinaria/index.html')
         else:
             print("Credenciales incorrectas")
-            return render(request, 'veterinaria/articulos.html', {"error": "Credenciales incorrectas"})
+            return render(request, 'veterinaria/index.html', {"error": "RUT y/o contraseñas incorrecto"})
 
-    return render(request, 'veterinaria/servicios.html')
+    return render(request, 'veterinaria/index.html')
+#CRUD PRODUCTOS
+def registroProductos(request):
+    if request.method == "POST":
+        codigo = request.POST["codigo"]
+        nombre = request.POST["nombre"]
+        valor = request.POST["valor"]
+        cantidad = request.POST["cantidad"]
+
+        # Verificar si el código ya existe
+        if Producto.objects.filter(codigo=codigo).exists():
+            # Manejar el caso donde el código ya existe
+            messages.error(request, "El código del producto ya existe.")
+        else:
+            try:
+                # Crear una instancia del producto
+                producto = Producto(
+                    codigo=codigo,
+                    nombre=nombre,
+                    valor=valor,
+                    cantidad=cantidad
+                )
+                # Guardar el producto en la base de datos
+                producto.save()
+                # Añadir mensaje de éxito
+                messages.success(request, "Producto registrado exitosamente.")
+            except IntegrityError:
+                # Manejar otros posibles errores de integridad
+                messages.error(request, "Error al registrar el producto.")
+        
+        return render(request, 'veterinaria/productosAdd.html')
+    else:
+        return render(request, 'veterinaria/productosAdd.html')
+
+def productosCrud(request):
+    productos = Producto.objects.all()
+    context = {"productos": productos}
+    return render(request, 'veterinaria/ProductosCrud.html', context)
+
+def eliminarProducto(request, pk):
+    try:
+        producto = Producto.objects.get(codigo=pk)
+        producto.delete()
+        mensaje = "¡Bien! Datos eliminados..."
+    except Producto.DoesNotExist:
+        mensaje = "Error, el producto no existe..."
+
+    productos = Producto.objects.all()  
+    context = {'productos': productos, 'mensaje': mensaje}  
+    return render(request, 'veterinaria/productosCrud.html', context)
+
+def productos_findEdit(request, pk):
+    if pk != "":
+        producto = Producto.objects.get(codigo=pk)
+        
+        context={'producto':producto}
+        if producto:
+            return render(request, 'veterinaria/productoEdit.html', context)
+        else:
+            context={'mensaje': "Error, codigo no existe..."}
+            return render(request, 'veterinaria/productosCrud.html', context)     
+
+def productoUpdate(request):
+    if request.method == "POST":
+        # Recupera los datos del formulario
+        codigo = request.POST["codigo"]
+        nombre = request.POST["nombre"]
+        valor = request.POST["valor"]
+        cantidad = request.POST["cantidad"]
+        
+        try:
+            # Recupera el producto existente por su código
+            producto = Producto.objects.get(codigo=codigo)
+        except Producto.DoesNotExist:
+            # Manejar el caso donde el producto no existe
+            messages.error(request, "El producto no existe.")
+            productos = Producto.objects.all()
+            context = {'productos': productos}
+            return render(request, 'veterinaria/productosCrud.html', context)
+        
+        # Actualiza los campos
+        producto.nombre = nombre
+        producto.valor = valor
+        producto.cantidad = cantidad
+        
+        producto.save()
+        
+        messages.success(request, "Producto actualizado exitosamente.")
+
+        # Redirige a la lista de productos actualizada
+        productos = Producto.objects.all()
+        context = {'productos': productos}
+        return render(request, 'veterinaria/productosCrud.html', context)
+    
+    else:
+        # Maneja la lógica para cargar los datos del producto a editar en el formulario
+        productos = Producto.objects.all()
+        context = {'productos': productos}
+        return render(request, 'veterinaria/productosCrud.html', context)

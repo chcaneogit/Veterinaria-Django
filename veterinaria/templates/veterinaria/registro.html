@@ -78,7 +78,21 @@
           </div>    
         </div>
       </form>
+      {% if messages %}
+        <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} {% if message.tags == 'error' %}alert-danger{% endif %}" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+        </div>
+      {% endif %}
     </div>
   </section>
   <!-- Fin de sección de registro -->
 {% endblock %}
+
+
+
+
+

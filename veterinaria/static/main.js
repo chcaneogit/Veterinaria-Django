@@ -32,7 +32,7 @@ function validarTexto(idCampo) {
     let nombreError = document.getElementById(idCampo + "-error");
     let formulario = nombreInput.closest('form');
 
-    if (nombre.length <=6) {
+    if (nombre.length <=1) {
         nombreError.innerText = "Por favor, ingresa tu "+ idCampo;
         formulario.classList.remove('was-validated');
         return false;
@@ -41,6 +41,24 @@ function validarTexto(idCampo) {
         formulario.classList.add('was-validated');
         return true;
     }
+}
+
+function validarNumero(idCampo) {
+    let numeroInput = document.getElementById(idCampo);
+    let numero = numeroInput.value;
+    let numeroError = document.getElementById(idCampo + "-error");
+    let formulario = numeroInput.closest('form');
+
+    numeroError.innerText = "";
+
+    if (!/^\d+$/.test(numero)) {
+        numeroError.innerText = "Por favor, ingresa solo números en " + idCampo;
+        formulario.classList.remove('was-validated');
+        return false;
+    }
+
+    formulario.classList.add('was-validated');
+    return true;
 }
 
 function validarEdad(idCampo) {
@@ -179,14 +197,13 @@ function validarFormulario() {
     const rutValido = validarTexto('rut');
     const direccionValida = validarTexto('direccion');
 
-    // Si alguna validación falla, muestra un mensaje de error y devuelve false
+    // Si alguna validación falla, devuelve false
     if (!(nombreValido && correoValido && edadValida && apellidoValido && celularValido && contraseñaValida && rutValido && direccionValida)) {
-        alert('Por favor, completa todos los campos correctamente.');
         return false;
     }
 
-    // Si todas las validaciones son exitosas, muestra una alerta indicando que la cuenta ha sido creada y devuelve true
-    alert('¡Cuenta creada exitosamente!');
+    // Si todas las validaciones son exitosas, devuelve true
+    
     return true;
 }
 
@@ -207,6 +224,23 @@ function validarEditar() {
 
     // Si todas las validaciones son exitosas, muestra una alerta indicando que la cuenta ha sido creada y devuelve true
     alert('¡Cuenta actualizada exitosamente!');
+    return true;
+}
+
+function validarProducto() {
+    // Llama funciones de validación individualmente
+    const codigoValido = validarTexto('codigo');
+    const nombreValido = validarTexto('nombre');
+    const valorValida = validarNumero('valor');
+    const cantidadValido = validarNumero('cantidad');
+
+    // Si alguna validación falla, devuelve false
+    if (!(codigoValido && nombreValido && valorValida && cantidadValido)) {
+        return false;
+    }
+
+    // Si todas las validaciones son exitosas, devuelve true
+    
     return true;
 }
 

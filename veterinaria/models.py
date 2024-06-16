@@ -14,3 +14,12 @@ class Usuario(models.Model):
 
     def __str__(self):
         return f"{self.rut} {self.dv} {self.nombre} {self.apellido} {self.correo} {self.nacimiento} {self.celular} {self.direccion} {self.password}"
+
+class Producto(models.Model):
+    codigo = models.CharField(max_length=10, primary_key=True)
+    nombre = models.CharField(max_length=20)
+    valor = models.CharField(max_length=6)
+    cantidad = models.CharField(max_length=4)
+    
+    def __str__(self):
+        return f"{self.codigo} {self.nombre} {self.valor} {self.cantidad}"

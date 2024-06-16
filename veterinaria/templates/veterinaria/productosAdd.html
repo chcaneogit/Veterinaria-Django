@@ -1,0 +1,51 @@
+{% extends 'veterinaria/base.html' %}
+{% load static %}
+
+{% block title %}Registro{% endblock %}
+
+{% block content %}
+  <!-- Inicio sección de registro -->
+  <section class="container">
+    <div class="container">
+      <div class="text-center">
+        <h3>Agregar producto</h3>
+        <img src="{% static 'imagenes/logo.png' %}" style="width: 185px;" alt="logo">
+      </div>
+    </div>
+    {% if messages %}
+        <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} {% if message.tags == 'error' %}alert-danger{% endif %}" role="alert">
+          {{ message }}
+        </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+    <form action="{% url 'registroProductos' %}" method="post" class="was-validated">
+      {% csrf_token %}
+      <table>
+          <tr>
+              <th><label for="codigo" class="form-label">Código:</label></th>
+              <td><input type="text" class="form-control" id="codigo" placeholder="Ingresa el código" name="codigo" required autocomplete="off" oninput="validarTexto('codigo')">
+              <span id="codigo-error"></span></td>
+
+              <th><label for="nombre" class="form-label">Nombre:</label></th>
+              <td><input type="text" class="form-control" id="nombre" placeholder="Ingresa el nombre" name="nombre" required autocomplete="off" oninput="validarTexto('nombre')">
+              <span id="nombre-error"></span></td>
+
+              <th><label for="valor" class="form-label">Valor:</label></th>
+              <td><input type="text" class="form-control" id="valor" placeholder="Ingresa el valor" name="valor" required autocomplete="off" oninput="validarNumero('valor')">
+              <span id="valor-error"></span></td>
+
+              <th><label for="cantidad" class="form-label">Cantidad:</label></th>
+              <td><input type="text" class="form-control" id="cantidad" placeholder="Ingresa la cantidad" name="cantidad" required autocomplete="off" oninput="validarNumero('cantidad')">
+              <span id="cantidad-error"></span></td>
+          </tr>
+      </table>
+      <br>
+      <button type="submit" class="btn btn-primary"id="botonCrearCuenta"onclick="validarProducto()">Crear producto</button>
+  </form>
+  
+  </section>
+<!-- Fin de sección de registro -->
+{% endblock %}
