@@ -23,25 +23,39 @@
     {% endif %}
     <form action="{% url 'registroProductos' %}" method="post" class="was-validated">
       {% csrf_token %}
-      <table>
-          <tr>
-              <th><label for="codigo" class="form-label">Código:</label></th>
-              <td><input type="text" class="form-control" id="codigo" placeholder="Ingresa el código" name="codigo" required autocomplete="off" oninput="validarTexto('codigo')">
-              <span id="codigo-error"></span></td>
-
-              <th><label for="nombre" class="form-label">Nombre:</label></th>
-              <td><input type="text" class="form-control" id="nombre" placeholder="Ingresa el nombre" name="nombre" required autocomplete="off" oninput="validarTexto('nombre')">
-              <span id="nombre-error"></span></td>
-
-              <th><label for="valor" class="form-label">Valor:</label></th>
-              <td><input type="text" class="form-control" id="valor" placeholder="Ingresa el valor" name="valor" required autocomplete="off" oninput="validarNumero('valor')">
-              <span id="valor-error"></span></td>
-
-              <th><label for="cantidad" class="form-label">Cantidad:</label></th>
-              <td><input type="text" class="form-control" id="cantidad" placeholder="Ingresa la cantidad" name="cantidad" required autocomplete="off" oninput="validarNumero('cantidad')">
-              <span id="cantidad-error"></span></td>
-          </tr>
-      </table>
+      <div class="container row mx-auto registro">
+        <div class="col-md-4 col-lg-4">
+          <div class="mb-3 ">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Ingresa el nombre" name="nombre" required autocomplete="off" oninput="validarTexto('nombre')">
+            <span id="nombre-error"></span>
+          </div>
+          <div class="mb-3 ">
+            <label for="codigo" class="form-label">Código:</label></th>
+          <input type="text" class="form-control" id="codigo" placeholder="Ingresa el código" name="codigo" required autocomplete="off" oninput="validarTexto('codigo')">
+          <span id="codigo-error"></span>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+          <div class="mb-3 ">
+            <label for="cantidad" class="form-label">Cantidad:</label>
+            <input type="text" class="form-control" id="cantidad" placeholder="Ingresa la cantidad" name="cantidad" required autocomplete="off" oninput="validarNumero('cantidad')">
+            <span id="cantidad-error"></span>
+          </div>
+          <div class="mb-3 "> 
+            <label for="valor" class="form-label">Valor:</label>
+            <input type="text" class="form-control" id="valor" placeholder="Ingresa el valor" name="valor" required autocomplete="off" oninput="validarNumero('valor')">
+            <span id="valor-error"></span>
+          </div>
+        </div>
+        <div class="col-md-4 col-lg-4">
+          <div class="mb-3 ">
+            <label for="descripcion" class="form-label">Descripcion:</label>
+            <textarea type="text" class="form-control" id="descripcion" placeholder="Ingresa el descripcion" name="descripcion" required autocomplete="off" oninput="validar ('descripcion')"></textarea>
+            <span id="descripcion-error"></span>
+          </div>
+        </div>
+      </div>
       <br>
       <button type="submit" class="btn btn-primary"id="botonCrearCuenta"onclick="validarProducto()">Crear producto</button>
   </form>

@@ -17,7 +17,9 @@ def servicios(request):
     return render(request, 'veterinaria/servicios.html', context)
 
 def productos(request):
-    context={}
+    #Muestra los productos llamándolos desde la BD, igual al crud
+    productos = Producto.objects.all()
+    context = {"productos": productos}
     return render(request, 'veterinaria/productos.html', context)
 
 def articulos(request):
@@ -36,10 +38,6 @@ def base(request):
     context={}
     return render(request, 'veterinaria/base.html', context)
 
-def crud(request):
-    context={}
-    return render(request, 'veterinaria/crud.html', context)
-
 def productosAdd(request):
     context={}
     return render(request, 'veterinaria/productosAdd.html', context)
@@ -48,11 +46,12 @@ def productosEdit(request):
     context={}
     return render(request, 'veterinaria/productosEdit.html', context)
 
-@login_required
+@login_required#Permite que la funcion solo se ejecute cuando el usuario esta logeado
 def perfil(request):
     usuario = request.user  # Recupera el usuario actualmente autenticado
     context = {'usuario': usuario}
     return render(request, 'veterinaria/perfil.html', context)
+
 #CRUD USUARIOS
 def crud(request):
     usuarios = Usuario.objects.all()
@@ -60,6 +59,7 @@ def crud(request):
     return render(request, 'veterinaria/crud.html', context)
 
 def registroUsuario(request):
+    #Obtiene los valores de los datos ingresados mediante POST
     if request.method == "POST":
         rut = request.POST["rut"]
         dv = request.POST["dv"]
@@ -71,9 +71,8 @@ def registroUsuario(request):
         direccion = request.POST["direccion"]
         password = request.POST["password"]
 
-
         try:
-            # Verificar si el usuario ya existe
+            # Verificar si el usuario ya existe por el rut
             if User.objects.filter(username=rut).exists():
                 messages.error(request, "El RUT ya está en uso.")
                 return render(request, 'veterinaria/registro.html')
@@ -116,7 +115,8 @@ def registroUsuario(request):
     
 def eliminar_usuario(request, pk):
     context={}
-    try:
+    
+    try:#Elimina al usuario mediante la pk(RUT)
         usuario = Usuario.objects.get(rut=pk)
         usuario.delete()
         mensaje = "¡Bien! Datos eliminados..."
@@ -130,6 +130,7 @@ def eliminar_usuario(request, pk):
         return render(request, 'veterinaria/crud.html', context)
 
 def usuarios_findEdit(request, pk):
+    #Función inicializa cuando se usar el boton editar en el CRUD
     if pk != "":
         usuario = Usuario.objects.get(rut=pk)
         
@@ -142,7 +143,7 @@ def usuarios_findEdit(request, pk):
         
 def usuarioUpdate(request):
     if request.method == "POST":
-        # Recupera los datos del formulario
+        # Recupera los datos del formulario mediante POST
         rut = request.POST["rut"]
         nombre = request.POST["nombre"]
         apellido = request.POST["apellido"]
@@ -178,18 +179,18 @@ def usuarioUpdate(request):
                 user.set_password(password)  # Utiliza set_password para cifrar la contraseña
             user.save()
         except User.DoesNotExist:
-            pass
+            pass #Solo continúa
         
         context = {'mensaje': "Ok, datos actualizados...", 'usuario': usuario}
         return render(request, 'veterinaria/index.html', context)
     else:
-        # Aquí manejas la lógica para cargar los datos del usuario a editar en el formulario
+        #Se maneja la lógica para cargar los datos del usuario a editar en el formulario
         usuarios = Usuario.objects.all()
         context = {'usuarios': usuarios}
         return render(request, 'veterinaria/crud.html', context)
     
 def login_view(request):
-    
+    #Primero ferifica si existe el metodo POST
     if request.method == 'POST':
         rut = request.POST.get('rut')
         password = request.POST.get('password')
@@ -198,9 +199,9 @@ def login_view(request):
         # Verificar que el usuario existe
         try:
             user = User.objects.get(username=rut)
-            print(f'User found: {user.username}, Active: {user.is_active}')
+            print(f'Usuario ecnontrado: {user.username}, Activo: {user.is_active}')
         except User.DoesNotExist:
-            print('User does not exist')
+            print('Usuario no existe')
             return render(request, 'veterinaria/index.html', {"error": "RUT y/o contraseñas incorrecto"})
 
         # Autenticar al usuario usando el campo rut
@@ -221,12 +222,13 @@ def registroProductos(request):
     if request.method == "POST":
         codigo = request.POST["codigo"]
         nombre = request.POST["nombre"]
+        descripcion = request.POST["descripcion"]
         valor = request.POST["valor"]
         cantidad = request.POST["cantidad"]
 
         # Verificar si el código ya existe
         if Producto.objects.filter(codigo=codigo).exists():
-            # Manejar el caso donde el código ya existe
+            # Manejar el caso donde el código ya existe, y mostrar mensaje
             messages.error(request, "El código del producto ya existe.")
         else:
             try:
@@ -234,6 +236,7 @@ def registroProductos(request):
                 producto = Producto(
                     codigo=codigo,
                     nombre=nombre,
+                    descripcion=descripcion,
                     valor=valor,
                     cantidad=cantidad
                 )
@@ -282,6 +285,7 @@ def productoUpdate(request):
         # Recupera los datos del formulario
         codigo = request.POST["codigo"]
         nombre = request.POST["nombre"]
+        descripcion = request.POST["descripcion"]
         valor = request.POST["valor"]
         cantidad = request.POST["cantidad"]
         
@@ -297,9 +301,9 @@ def productoUpdate(request):
         
         # Actualiza los campos
         producto.nombre = nombre
+        producto.descripcion = descripcion
         producto.valor = valor
         producto.cantidad = cantidad
-        
         producto.save()
         
         messages.success(request, "Producto actualizado exitosamente.")

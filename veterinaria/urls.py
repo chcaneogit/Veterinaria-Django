@@ -2,6 +2,8 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -28,5 +30,4 @@ urlpatterns = [
     path('eliminarProducto/<str:pk>/', views.eliminarProducto, name='eliminarProducto'),
     path('productos_findEdit/<str:pk>/', views.productos_findEdit, name='productos_findEdit'),
     path('productoUpdate/', views.productoUpdate, name='productoUpdate'),
-    
 ]

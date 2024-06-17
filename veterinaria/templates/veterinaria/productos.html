@@ -5,6 +5,8 @@
 
 {% block content %}
 
+{% load humanize %} <!--Carga etiqueta de formato django para poder usar |intcomma-->
+
   <section class="container">
     <img class="img-fluid" src="{% static 'imagenes/banner_productos1.png' %}" alt="banner_productos">
   </section>
@@ -13,81 +15,30 @@
 
   <!--Inicio card productos-->
   <section class="container" id="Productos">
-  <section class="row" id="Alimentos">
-    <div class="card container col-lg-2 col-md-6" style="width: 15rem ;">
-      <img src="{% static 'imagenes/comida1.png' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Comida 1</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, adipisci!</p>
-        <a href="#" class="btn btn-primary">Añadir al carrito</a>
-      </div>
+    {% if productos %}
+    <div class="row">
+        {% for producto in productos %}<!--Crea bucle para mostrar todos los productos almacenados-->
+            <div class="col-md-4 mb-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="{% static 'imagenes/' %}producto{{ forloop.counter }}.png" class="card-img-top" alt="Imagen del producto {{ producto.nombre }}"style="max-height: 50vh;">
+                    <!--Cada imagen se almacena como producto1,producto2, etc, para poder crear una iteracion y asi mostrar las imagenes junto a los valores de los productos-->
+                    <div class="card-body">
+                        <h5 class="card-title">{{ producto.nombre }}</h5>
+                        <p class="card-text">{{ producto.descripcion }}</p>
+                        <p class="card-text">Precio: ${{ producto.valor|intcomma}}</p>
+                        <form action="#" method="POST">
+                          {% csrf_token %}
+                          <input type="hidden" name="codigo_producto" value="{{ producto.codigo }}">
+                          <button type="submit" class="btn btn-primary">Añadir al carrito</button>
+                      </form>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-
-    <div class="card container col-lg-2 col-md-6" style="width: 15rem ;">
-      <img src="{% static 'imagenes/comida2.png' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Comida 2</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, unde.</p>
-        <a href="#" class="btn btn-primary">Añadir al carrito</a>
-      </div>
-    </div>
-
-    <div class="card container col-lg-2 col-md-6" style="width: 15rem;">
-      <img src="{% static 'imagenes/comida3.png' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Comida 3</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, maiores..</p>
-        <a href="#" class="btn btn-primary">Añadir al carrito</a>
-      </div>
-    </div>
-
-    <div class="card container col-lg-2 col-md-6" style="width: 15rem ;">
-      <img src="{% static 'imagenes/comida4.png' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Comida 4</h5>
-        <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat, molestiae!</p>
-        <a href="#" class="btn btn-primary">Añadir al carrito</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="row" id="Alimentos">
-    <div class="card container col-lg-2 col-md-6" style="width: 18rem ;">
-      <img src="{% static 'imagenes/arena1.png' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Arena 1</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, adipisci!</p>
-        <a href="#" class="btn btn-primary">Añadir al carrito</a>
-      </div>
-    </div>
-
-    <div class="card container col-lg-2 col-md-6" style="width: 18rem ;">
-      <img src="{% static 'imagenes/arena2.png' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Arena 2</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime, unde.</p>
-        <a href="#" class="btn btn-primary">Añadir al carrito</a>
-      </div>
-    </div>
-
-    <div class="card container col-lg-2 col-md-6" style="width: 18rem ;">
-      <img src="{% static 'imagenes/arena3.png' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Arena 3</h5>
-        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, maiores..</p>
-        <a href="#" class="btn btn-primary">Añadir al carrito</a>
-      </div>
-    </div>
-
-    <div class="card container col-lg-2 col-md-6" style="width: 18rem ;">
-      <img src="{% static 'imagenes/arena4.png' %}" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Arena 4</h5>
-        <p class="card-text">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fugiat, molestiae!</p>
-        <a href="#" class="btn btn-primary">Añadir al carrito</a>
-      </div>
-    </div>
-  </section>
+{% else %}
+    <p>No hay productos disponibles.</p>
+{% endif %}
   </section>
   <!--Fin card productos-->
 {% endblock %}

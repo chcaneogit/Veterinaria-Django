@@ -88,3 +88,6 @@ form {
 #direccion{
   width: 210%;
 }
+.card, .card-img-top{
+  background-color: #54e9a6;
+}

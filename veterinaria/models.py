@@ -18,8 +18,9 @@ class Usuario(models.Model):
 class Producto(models.Model):
     codigo = models.CharField(max_length=10, primary_key=True)
     nombre = models.CharField(max_length=20)
-    valor = models.CharField(max_length=6)
+    descripcion = models.CharField(max_length=100)
+    valor = models.IntegerField()
     cantidad = models.CharField(max_length=4)
     
     def __str__(self):
-        return f"{self.codigo} {self.nombre} {self.valor} {self.cantidad}"
+        return f"{self.codigo} {self.nombre} {self.valor} {self.cantidad} {self.descripcion}"
