@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.db import IntegrityError
@@ -25,10 +25,6 @@ def productos(request):
 def articulos(request):
     context={}
     return render(request, 'veterinaria/articulos.html', context)
-
-def carro(request):
-    context={}
-    return render(request, 'veterinaria/carro.html', context)
 
 def registro(request):
     context={}
@@ -225,6 +221,7 @@ def registroProductos(request):
         descripcion = request.POST["descripcion"]
         valor = request.POST["valor"]
         cantidad = request.POST["cantidad"]
+        imagen = request.FILES.get('imagen', None)
 
         # Verificar si el código ya existe
         if Producto.objects.filter(codigo=codigo).exists():
@@ -238,7 +235,8 @@ def registroProductos(request):
                     nombre=nombre,
                     descripcion=descripcion,
                     valor=valor,
-                    cantidad=cantidad
+                    cantidad=cantidad,
+                    imagen=imagen
                 )
                 # Guardar el producto en la base de datos
                 producto.save()
@@ -288,6 +286,7 @@ def productoUpdate(request):
         descripcion = request.POST["descripcion"]
         valor = request.POST["valor"]
         cantidad = request.POST["cantidad"]
+        imagen = request.FILES.get('imagen', None)
         
         try:
             # Recupera el producto existente por su código
@@ -304,6 +303,7 @@ def productoUpdate(request):
         producto.descripcion = descripcion
         producto.valor = valor
         producto.cantidad = cantidad
+        producto.imagen = imagen
         producto.save()
         
         messages.success(request, "Producto actualizado exitosamente.")
@@ -318,3 +318,72 @@ def productoUpdate(request):
         productos = Producto.objects.all()
         context = {'productos': productos}
         return render(request, 'veterinaria/productosCrud.html', context)
+
+def agregar_al_carrito(request, producto_codigo):
+    producto = Producto.objects.get(codigo=producto_codigo)
+    carrito = request.session.get('carrito', [])
+
+    # Variable para comprobar si el producto ya está en el carrito
+    producto_encontrado = False
+    
+    # Verificar si el producto ya está en el carrito
+    for item in carrito:
+        if item['codigo'] == producto.codigo:
+            if item['cantidad'] < 5:  
+                item['cantidad'] += 1
+            producto_encontrado = True
+            break
+    
+    if not producto_encontrado :
+        # Agregar el producto al carrito con la cantidad solicitada
+        carrito.append({
+            'codigo': producto.codigo,
+            'nombre': producto.nombre,
+            'descripcion': producto.descripcion,
+            'cantidad': 1,
+            'valor': producto.valor
+        })
+    
+    # Guardar el carrito en la sesión
+    request.session['carrito'] = carrito
+
+    return redirect('carro')
+
+def carro(request):
+    carrito = request.session.get('carrito', [])
+    total_pago = 0
+    total_iva = 0
+
+    for item in carrito:
+        item_total = item['valor'] * item['cantidad']
+        item['total'] = item_total
+        total_pago += item_total
+        total_iva = total_pago * 0.19
+    
+    return render(request, 'veterinaria/carro.html', {'carrito': carrito, 'total_pago': total_pago, 'total_iva': total_iva})
+
+
+def actualizar_cantidad(request, producto_codigo):
+    carrito = request.session.get('carrito', [])
+    accion = request.POST.get('accion')
+
+    for item in carrito:
+        if item['codigo'] == producto_codigo:
+            if accion == 'sumar' and item['cantidad'] < 5:
+                item['cantidad'] += 1
+            elif accion == 'restar' and item['cantidad'] > 1:
+                item['cantidad'] -= 1
+            break
+
+    request.session['carrito'] = carrito
+    return redirect('carro')
+
+def eliminar_del_carrito(request, producto_codigo):
+    carrito = request.session.get('carrito', [])
+    carrito = [item for item in carrito if item['codigo'] != producto_codigo]
+
+    request.session['carrito'] = carrito
+    return redirect('carro')
+
+
+    

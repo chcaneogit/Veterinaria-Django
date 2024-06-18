@@ -21,7 +21,7 @@
         {% endfor %}
         </div>
     {% endif %}
-    <form action="{% url 'registroProductos' %}" method="post" class="was-validated">
+    <form action="{% url 'registroProductos' %}" method="post" class="was-validated" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="container row mx-auto registro">
         <div class="col-md-4 col-lg-4">
@@ -53,6 +53,10 @@
             <label for="descripcion" class="form-label">Descripcion:</label>
             <textarea type="text" class="form-control" id="descripcion" placeholder="Ingresa el descripcion" name="descripcion" required autocomplete="off" oninput="validar ('descripcion')"></textarea>
             <span id="descripcion-error"></span>
+          </div>
+          <div class="mb-3 "> 
+            <label for="imagen" class="form-label">Imagen:</label>
+            <input type="file" class="form-control" id="imagen" name="imagen" required autocomplete="off" >
           </div>
         </div>
       </div>

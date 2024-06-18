@@ -20,7 +20,8 @@ class Producto(models.Model):
     nombre = models.CharField(max_length=20)
     descripcion = models.CharField(max_length=100)
     valor = models.IntegerField()
-    cantidad = models.CharField(max_length=4)
+    cantidad = models.IntegerField()
+    imagen = models.ImageField(upload_to='productos/', blank=True, null=True)
     
     def __str__(self):
         return f"{self.codigo} {self.nombre} {self.valor} {self.cantidad} {self.descripcion}"

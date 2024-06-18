@@ -20,15 +20,15 @@
         {% for producto in productos %}<!--Crea bucle para mostrar todos los productos almacenados-->
             <div class="col-md-4 mb-4">
                 <div class="card" style="width: 18rem;">
-                    <img src="{% static 'imagenes/' %}producto{{ forloop.counter }}.png" class="card-img-top" alt="Imagen del producto {{ producto.nombre }}"style="max-height: 50vh;">
-                    <!--Cada imagen se almacena como producto1,producto2, etc, para poder crear una iteracion y asi mostrar las imagenes junto a los valores de los productos-->
+                    {% if producto.imagen %}
+                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="card-img-top" style="max-height: 50vh;">
+                    {% endif%}
                     <div class="card-body">
                         <h5 class="card-title">{{ producto.nombre }}</h5>
                         <p class="card-text">{{ producto.descripcion }}</p>
                         <p class="card-text">Precio: ${{ producto.valor|intcomma}}</p>
-                        <form action="#" method="POST">
+                        <form action="{% url 'agregar_al_carrito' producto.codigo %}" method="POST">
                           {% csrf_token %}
-                          <input type="hidden" name="codigo_producto" value="{{ producto.codigo }}">
                           <button type="submit" class="btn btn-primary">Añadir al carrito</button>
                       </form>
                     </div>

@@ -30,4 +30,9 @@ urlpatterns = [
     path('eliminarProducto/<str:pk>/', views.eliminarProducto, name='eliminarProducto'),
     path('productos_findEdit/<str:pk>/', views.productos_findEdit, name='productos_findEdit'),
     path('productoUpdate/', views.productoUpdate, name='productoUpdate'),
+    path('agregar_al_carrito/<str:producto_codigo>/', views.agregar_al_carrito, name='agregar_al_carrito'),
+    path('actualizar_cantidad/<str:producto_codigo>/', views.actualizar_cantidad, name='actualizar_cantidad'),
+    path('eliminar_del_carrito/<str:producto_codigo>/', views.eliminar_del_carrito, name='eliminar_del_carrito'),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
