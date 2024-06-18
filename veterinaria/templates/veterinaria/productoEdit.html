@@ -1,7 +1,7 @@
 {% extends 'veterinaria/base.html' %}
 {% load static %}
 
-{% block title %}Registro{% endblock %}
+{% block title %}Editar{% endblock %}
 
 {% block content %}
   <!-- Inicio sección de registro -->
@@ -45,25 +45,6 @@
             <textarea type="text" class="form-control" id="descripcion" placeholder="Ingresa la descripcion" name="descripcion" required autocomplete="off" oninput="validarTexto('descripcion')">{{ producto.descripcion }}</textarea>
             <span id="descripcion-error"></span>
           </div>
-          <div class="mb-3">
-            <input type="file" class="form-control mt-2" id="imagen" name="imagen" accept="image/*">
-            <label for="imagen" class="form-label">Imagen:</label>
-            {% if producto.imagen %}
-                {% if producto.imagen.url %}
-                    <!-- Mostrar la imagen actual del producto si existe -->
-                    <img src="{{ producto.imagen.url }}" alt="{{ producto.nombre }}" class="img-fluid">
-                {% else %}
-                    <p>No hay imagen asociada.</p>
-                {% endif %}
-            {% endif %}
-            
-            <!-- Agregar un campo oculto para mantener la URL de la imagen actual -->
-            {% if producto.imagen and producto.imagen.url %}
-                <input type="hidden" name="imagen_actual" value="{{ producto.imagen.url }}" id="imagen_actual">
-            {% else %}
-                <input type="hidden" name="imagen_actual" value="" id="imagen_actual">
-            {% endif %}
-        </div>
         </div>
       </div>
       <br>
@@ -75,22 +56,3 @@
 {% endblock %}
 
 
-<table>
-  <tr>
-    
-      <th><label for="codigo" class="form-label">Código:</label></th>
-      <td>
-
-      <th><label for="nombre" class="form-label">Nombre:</label></th>
-      <td>
-      <span id="nombre-error"></span></td>
-
-      <th><label for="valor" class="form-label">Valor:</label></th>
-      <td>
-      <span id="valor-error"></span></td>
-
-      <th><label for="cantidad" class="form-label">Cantidad:</label></th>
-      <td>
-      <span id="cantidad-error"></span></td>
-  </tr>
-</table>

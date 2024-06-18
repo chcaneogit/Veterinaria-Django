@@ -46,14 +46,16 @@
             {% endfor %}
         </tbody>
     </table>
-    <form action="" method="POST" class="d-inline">
+    <form action="{% url 'pagar_carrito' %}" method="POST" class="d-inline">
       {% csrf_token %}
       <h5>Total IVA: ${{ total_iva|intcomma }}</h5>
       <h5>Total a pagar: ${{ total_pago|intcomma }}</h5>
       <button type="submit" class="btn btn-primary ">Pagar</button>
+      
   </form>
     {% else %}
     <p>Tu carrito está vacío.</p>
     {% endif %}
 </div>
+<br>
 {% endblock %}

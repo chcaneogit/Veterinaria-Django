@@ -286,8 +286,7 @@ def productoUpdate(request):
         descripcion = request.POST["descripcion"]
         valor = request.POST["valor"]
         cantidad = request.POST["cantidad"]
-        imagen = request.FILES.get('imagen', None)
-        
+
         try:
             # Recupera el producto existente por su código
             producto = Producto.objects.get(codigo=codigo)
@@ -303,7 +302,6 @@ def productoUpdate(request):
         producto.descripcion = descripcion
         producto.valor = valor
         producto.cantidad = cantidad
-        producto.imagen = imagen
         producto.save()
         
         messages.success(request, "Producto actualizado exitosamente.")
@@ -380,10 +378,46 @@ def actualizar_cantidad(request, producto_codigo):
 
 def eliminar_del_carrito(request, producto_codigo):
     carrito = request.session.get('carrito', [])
-    carrito = [item for item in carrito if item['codigo'] != producto_codigo]
-
-    request.session['carrito'] = carrito
+    # Crear una nueva lista para los items que no serán eliminados
+    nuevo_carrito = []
+    # Iterar sobre cada item en el carrito
+    for item in carrito:
+        # Si el código del item es diferente al código del producto a eliminar
+        if item['codigo'] != producto_codigo:
+            # Agregar el item a la nueva lista
+            nuevo_carrito.append(item)
+    
+    # Actualizar el carrito en la sesión con la nueva lista
+    request.session['carrito'] = nuevo_carrito
+    
+    # Redirigir a la vista del carrito
     return redirect('carro')
 
+def pagar_carrito(request):
+    if request.method == "POST":
+        carrito = request.session.get('carrito', [])
+        productos_no_disponibles = []
 
-    
+        for item in carrito:
+            try:
+                producto = Producto.objects.get(codigo=item['codigo'])
+                if producto.cantidad >= item['cantidad']:
+                    producto.cantidad -= item['cantidad']
+                    producto.save()
+                else:
+                    productos_no_disponibles.append(f"{producto.nombre} (cantidad disponible: {producto.cantidad})")
+            except Producto.DoesNotExist:
+                productos_no_disponibles.append(item['nombre'])
+
+        if productos_no_disponibles:
+            mensajes_error = ", ".join(productos_no_disponibles)
+            messages.error(request, f"No hay suficiente stock para los siguientes productos: {mensajes_error}.")
+            return redirect('carro')
+
+        # Vaciar el carrito después de la compra
+        request.session['carrito'] = []
+        messages.success(request, "Compra realizada exitosamente.")
+        return redirect('productos')
+    else:
+        messages.error(request, "Método no permitido.")
+        return redirect('carro')
