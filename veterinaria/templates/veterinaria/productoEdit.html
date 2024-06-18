@@ -12,7 +12,7 @@
         <img src="{% static 'imagenes/logo.png' %}" style="width: 185px;" alt="logo">
       </div>
     </div>
-    <form action="{% url 'productoUpdate' %}" method="post" class="was-validated">
+    <form action="{% url 'productoUpdate' %}" method="post" enctype="multipart/form-data" class="was-validated">
       {% csrf_token %}
       <div class="container row mx-auto registro">
         <div class="col-md-4 col-lg-4">
