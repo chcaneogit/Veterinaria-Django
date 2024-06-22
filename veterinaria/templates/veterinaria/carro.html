@@ -8,7 +8,6 @@
 <div class="container">
     <br>
     <h2>Carrito de compras</h2>
-    {% if carrito %}
     <table class="table">
         <thead>
             <tr>
@@ -51,11 +50,16 @@
       <h5>Total IVA: ${{ total_iva|intcomma }}</h5>
       <h5>Total a pagar: ${{ total_pago|intcomma }}</h5>
       <button type="submit" class="btn btn-primary ">Pagar</button>
-      
-  </form>
-    {% else %}
-    <p>Tu carrito está vacío.</p>
-    {% endif %}
+    </form>
+    {% if messages %}
+        <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} {% if message.tags == 'error' %}alert-danger{% endif %}" role="alert">
+        {{ message }}
+        </div>
+        {% endfor %}
+        </div>
+    {% endif %} 
 </div>
 <br>
 {% endblock %}

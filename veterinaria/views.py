@@ -34,14 +34,14 @@ def base(request):
     context={}
     return render(request, 'veterinaria/base.html', context)
 
-@login_required#Permite que la funcion solo se ejecute cuando el usuario esta logeado
+@login_required #Permite que la funcion solo se ejecute cuando el usuario esta logeado
 def perfil(request):
     usuario = request.user  # Recupera el usuario actualmente autenticado
     context = {'usuario': usuario}
     return render(request, 'veterinaria/perfil.html', context)
 
 #CRUD USUARIOS
-@staff_member_required
+@staff_member_required #Permite que la funcion solo se ejecute cuando el usuario staff esta logeado
 def crud(request):
     usuarios = Usuario.objects.all()
     context = {"usuarios": usuarios}
@@ -63,7 +63,7 @@ def registroUsuario(request):
         try:
             # Verificar si el usuario ya existe por el rut
             if User.objects.filter(username=rut).exists():
-                messages.error(request, "El RUT ya está en uso.")
+                messages.error(request, "El RUT ya está en uso.") #Se usan mensajes para poder mostrarlos en la página
                 return render(request, 'veterinaria/registro.html')
 
             # Crear un usuario de Django
@@ -88,9 +88,8 @@ def registroUsuario(request):
                 password=make_password(password)  # Cifrar la contraseña
             )
 
-            # Añadir mensaje de éxito
             messages.success(request, "Cuenta creada exitosamente.")
-            # Redirigir a la página deseada después del registro
+        
             return render(request, 'veterinaria/registro.html') 
 
         except IntegrityError:
@@ -99,7 +98,7 @@ def registroUsuario(request):
             return render(request, 'veterinaria/registro.html')
 
     else:
-        # Renderizar el formulario de registro en el método GET
+    
         return render(request, 'veterinaria/registro.html')
     
 @staff_member_required
@@ -364,11 +363,11 @@ def carro(request):
     for item in carrito:
         item_total = item['valor'] * item['cantidad']
         item['total'] = item_total
+        #Funciones para realizar cálculos
         total_pago += item_total
         total_iva = total_pago * 0.19
-    
+    #Se crea diccionario para poder llamar variables
     return render(request, 'veterinaria/carro.html', {'carrito': carrito, 'total_pago': total_pago, 'total_iva': total_iva})
-
 
 def actualizar_cantidad(request, producto_codigo):
     carrito = request.session.get('carrito', [])
@@ -405,20 +404,26 @@ def eliminar_del_carrito(request, producto_codigo):
 def pagar_carrito(request):
     if request.method == "POST":
         carrito = request.session.get('carrito', [])
+        # Lista para almacenar los productos que no tienen suficiente stock
         productos_no_disponibles = []
 
         for item in carrito:
             try:
+                #Buscar producto por código
                 producto = Producto.objects.get(codigo=item['codigo'])
+                # Verificar si hay suficiente stock
                 if producto.cantidad >= item['cantidad']:
+                    #Reducir la cantidad del producto en stock
                     producto.cantidad -= item['cantidad']
                     producto.save()
                 else:
+                    # Añadir el producto a la lista de no disponibles con un mensaje detallado
                     productos_no_disponibles.append(f"{producto.nombre} (cantidad disponible: {producto.cantidad})")
             except Producto.DoesNotExist:
                 productos_no_disponibles.append(item['nombre'])
 
         if productos_no_disponibles:
+            # Usar join para concatenar los nombres de los productos no disponibles en un solo string
             mensajes_error = ", ".join(productos_no_disponibles)
             messages.error(request, f"No hay suficiente stock para los siguientes productos: {mensajes_error}.")
             return redirect('carro')
@@ -426,7 +431,6 @@ def pagar_carrito(request):
         # Vaciar el carrito después de la compra
         request.session['carrito'] = []
         messages.success(request, "Compra realizada exitosamente.")
-        return redirect('productos')
-    else:
-        messages.error(request, "Método no permitido.")
         return redirect('carro')
+    
+    
