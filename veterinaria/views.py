@@ -6,7 +6,7 @@ from .models import Usuario, Producto
 from django.contrib.auth.hashers import make_password
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
+from django.contrib.admin.views.decorators import staff_member_required
 #Create your views here.
 def index(request):
     context={}
@@ -34,14 +34,6 @@ def base(request):
     context={}
     return render(request, 'veterinaria/base.html', context)
 
-def productosAdd(request):
-    context={}
-    return render(request, 'veterinaria/productosAdd.html', context)
-
-def productosEdit(request):
-    context={}
-    return render(request, 'veterinaria/productosEdit.html', context)
-
 @login_required#Permite que la funcion solo se ejecute cuando el usuario esta logeado
 def perfil(request):
     usuario = request.user  # Recupera el usuario actualmente autenticado
@@ -49,6 +41,7 @@ def perfil(request):
     return render(request, 'veterinaria/perfil.html', context)
 
 #CRUD USUARIOS
+@staff_member_required
 def crud(request):
     usuarios = Usuario.objects.all()
     context = {"usuarios": usuarios}
@@ -109,6 +102,7 @@ def registroUsuario(request):
         # Renderizar el formulario de registro en el método GET
         return render(request, 'veterinaria/registro.html')
     
+@staff_member_required
 def eliminar_usuario(request, pk):
     context={}
     
@@ -214,6 +208,17 @@ def login_view(request):
 
     return render(request, 'veterinaria/index.html')
 #CRUD PRODUCTOS
+@staff_member_required
+def productosAdd(request):
+    context={}
+    return render(request, 'veterinaria/productosAdd.html', context)
+
+@staff_member_required
+def productosEdit(request):
+    context={}
+    return render(request, 'veterinaria/productosEdit.html', context)
+
+@staff_member_required
 def registroProductos(request):
     if request.method == "POST":
         codigo = request.POST["codigo"]
@@ -250,11 +255,13 @@ def registroProductos(request):
     else:
         return render(request, 'veterinaria/productosAdd.html')
 
+@staff_member_required
 def productosCrud(request):
     productos = Producto.objects.all()
     context = {"productos": productos}
     return render(request, 'veterinaria/ProductosCrud.html', context)
 
+@staff_member_required
 def eliminarProducto(request, pk):
     try:
         producto = Producto.objects.get(codigo=pk)
@@ -267,6 +274,7 @@ def eliminarProducto(request, pk):
     context = {'productos': productos, 'mensaje': mensaje}  
     return render(request, 'veterinaria/productosCrud.html', context)
 
+@staff_member_required
 def productos_findEdit(request, pk):
     if pk != "":
         producto = Producto.objects.get(codigo=pk)
@@ -278,6 +286,7 @@ def productos_findEdit(request, pk):
             context={'mensaje': "Error, codigo no existe..."}
             return render(request, 'veterinaria/productosCrud.html', context)     
 
+@staff_member_required
 def productoUpdate(request):
     if request.method == "POST":
         # Recupera los datos del formulario
